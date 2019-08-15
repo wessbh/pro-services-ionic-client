@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="bg-class ion-margin" >
+    <form  #form="ngForm">
+        <ion-grid>
+            <ion-row color="primary" justify-content-center>
+              <ion-col align-self-center size-md="8" size-lg="8" size-xs="12">
+                <div text-center>
+                  <h3>Create your account!</h3>
+                </div>
+                <div padding>
+                  <ion-item>
+                    <ion-input  name="name" type="text" placeholder="Name" ngModel required></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input name="confirm" type="password" placeholder="Password again" ngModel required></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-icon name="phone-portrait"></ion-icon>
+                    <ion-input name="mobile" type="number" placeholder="Mobile number" ngModel required></ion-input>
+                  </ion-item>
+                  <ion-item>
+                      <ion-icon name="call"></ion-icon>
+                      <ion-input name="phone" type="number" placeholder="Phone number" ngModel required></ion-input>
+                  </ion-item>
+                  <ion-item>
+                      <ion-label fixed (click)="getPhoto()">Choose your picture</ion-label>
+                      <ion-avatar item-end>
+                        <img src="{{imgPreview}}" (click)="getPhoto()">
+                      </ion-avatar>
+                  </ion-item>
+                  <ion-item>
+                      <!--<ion-label>Choose your payment method</ion-label>-->
+                      <ion-label>Choose your payment method</ion-label>
+                      <ion-select class="fullWidth" (ionChange)="onSelectChange($event)" value="payment_method" okText="Okay" cancelText="Dismiss" >
+                        <ion-select-option value="credit">Credit card</ion-select-option>
+                        <ion-select-option value="edinar">e-dinar</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+                </div>
+                <div padding>
+                  <ion-button  size="large" type="submit" [disabled]="form.invalid" expand="block">Register</ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+            </ion-grid>
+    </form>
+  </ion-content>
