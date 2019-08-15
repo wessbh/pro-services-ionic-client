@@ -1,17 +1,41 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-  </div>
-  <ion-button (click)="nextPage('login')">
-    Click Me
-  </ion-button>
+<ion-header> </ion-header>
+<ion-content class="bg-class">
+<ion-grid class="marginGrid">
+  <ion-row class="ion-text-center">
+      <ion-col col-2 class="align-self-center">
+      </ion-col>
+      <ion-col col-8 class="align-self-center" size="8">
+          <img src ="assets/icon_handshake.png"/> 
+      </ion-col>
+      <ion-col col-2 class="align-self-center">
+      </ion-col>
+  </ion-row>
+  <ion-row class="ion-text-center">
+      <ion-col col-2 class="align-self-center">
+      </ion-col>
+      <ion-col col-8 class="align-self-center" size="8">
+          <ion-label color ="primary" style="font-size: 15pt; font-family: 'Tahoma'">E-SERVICES</ion-label>
+       </ion-col>
+       <ion-col col-2 class="align-self-center">
+       </ion-col>
+  </ion-row>
+    <ion-row class="ion-text-center marginRow">
+        <ion-col col-2 class="align-self-center">
+        </ion-col>
+      <ion-col col-8 size="9">
+          <ion-button (click)="navigate('auth')" shape="round" fill="outline" expand="block">SIGN UP</ion-button> 
+      </ion-col>
+      <ion-col col-2 class="align-self-center">
+      </ion-col>
+  </ion-row>
+  <ion-row class="ion-text-center">
+      <ion-col col-2 class="align-self-center">
+      </ion-col>
+    <ion-col col-8 size="9">
+        <ion-button (click)="navigate('login')" style="color: aliceblue"  shape="round" color="danger" expand="block">LOGIN</ion-button>
+    </ion-col>
+    <ion-col col-2 class="align-self-center">
+    </ion-col>
+  </ion-row>
+</ion-grid>
 </ion-content>

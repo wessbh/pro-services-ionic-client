@@ -1,24 +1,17 @@
-import { Component } from '@angular/core';
-import { AlertController, NavController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import {NavController } from '@ionic/angular';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
+  path: String = "assets/icon_handshake.png";
+  constructor(private nav: NavController) { }
 
-  constructor(public alertController:AlertController, public nav: NavController) {}
-
- async alert(){
-    const alert = await this.alertController.create({
-      header: 'Alert',
-      subHeader: 'Subtitle',
-      message: 'This is an alert message.',
-      buttons: ['OK']
-    });
-    await alert.present();
+  ngOnInit(){
   }
-  nextPage(route: string){
+  navigate(route: string){
     this.nav.navigateForward(route);
   }
 }
