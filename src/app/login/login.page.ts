@@ -39,10 +39,6 @@ export class LoginPage implements OnInit {
         console.log(error);
       },
       () => {
-<<<<<<< HEAD
-=======
-        this.dismissLogin();
->>>>>>> 780b8cdae16a41789253e007d461a41970aca5d9
         this.nav.navigateRoot('/auth');
       }
     );

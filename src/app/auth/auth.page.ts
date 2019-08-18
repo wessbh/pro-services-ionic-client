@@ -72,7 +72,7 @@ export class AuthPage implements OnInit {
         {
           text: 'Confirm',
           handler: data => {
-            this.card = new Card (card_type.credit_card.toString(), data.card_number, data.expiration_date, data.cvv, null);
+            this.card = new Card (card_type.credit_card, data.card_number, data.expiration_date, data.cvv, null);
             console.log(this.card);
           }
         }
@@ -108,7 +108,7 @@ export class AuthPage implements OnInit {
       {
         text: 'Confirm',
         handler: data => {
-          this.card = new Card (card_type.edinar.toString(), data.card_number,null,null, data.password_edinar);
+          this.card = new Card (card_type.edinar, data.card_number,null,null, data.password_edinar);
           console.log(this.card);
         }
       }
