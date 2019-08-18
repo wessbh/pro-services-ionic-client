@@ -11,17 +11,20 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
+import { HttpClientModule }    from '@angular/common/http';
+import { NativeStorage } from '@ionic-native/native-storage/ngx';
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     ImagePicker,
-    Base64
+    Base64,
+    NativeStorage
   ],
   bootstrap: [AppComponent]
 })

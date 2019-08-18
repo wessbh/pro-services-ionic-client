@@ -15,24 +15,27 @@
                 </div>
                 <div padding>
                   <ion-item>
-                    <ion-input  name="name" type="text" placeholder="Name" ngModel required></ion-input>
+                    <ion-input [(ngModel)]="user.nom" name="nom" type="text" placeholder="Name" ngModel required></ion-input>
                   </ion-item>
                   <ion-item>
-                    <ion-input name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+                    <ion-input [(ngModel)]="user.prenom" name="prenom" type="text" placeholder="Last name" ngModel required></ion-input>
                   </ion-item>
                   <ion-item>
-                    <ion-input name="password" type="password" placeholder="Password" ngModel required></ion-input>
+                    <ion-input [(ngModel)]="user.email" name="email" type="email" placeholder="your@email.com" ngModel required></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-input [(ngModel)]="user.password" name="password" type="password" placeholder="Password" ngModel required></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-input name="confirm" type="password" placeholder="Password again" ngModel required></ion-input>
                   </ion-item>
                   <ion-item>
                     <ion-icon name="phone-portrait"></ion-icon>
-                    <ion-input name="mobile" type="number" placeholder="Mobile number" ngModel required></ion-input>
+                    <ion-input [(ngModel)]="user.num_portable" name="mobile" type="number" placeholder="Mobile number" ngModel required></ion-input>
                   </ion-item>
                   <ion-item>
                       <ion-icon name="call"></ion-icon>
-                      <ion-input name="phone" type="number" placeholder="Phone number" ngModel required></ion-input>
+                      <ion-input [(ngModel)]="user.num_fixe" name="phone" type="number" placeholder="Phone number" ngModel required></ion-input>
                   </ion-item>
                   <ion-item>
                       <ion-label fixed (click)="getPhoto()">Choose your picture</ion-label>
@@ -50,7 +53,7 @@
                     </ion-item>
                 </div>
                 <div padding>
-                  <ion-button  size="large" type="submit" [disabled]="form.invalid" expand="block">Register</ion-button>
+                  <ion-button (click)="register()" size="large" type="submit" [disabled]="form.invalid" expand="block">Register</ion-button>
                 </div>
               </ion-col>
             </ion-row>

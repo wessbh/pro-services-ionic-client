@@ -3,6 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { NavController, AlertController } from '@ionic/angular';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
+import { AuthService } from '../services/auth.service';
+import { Card, card_type } from './models/card';
+import { User } from './models/user';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.page.html',
@@ -10,12 +13,15 @@ import { ImagePicker } from '@ionic-native/image-picker/ngx';
 })
 export class AuthPage implements OnInit {
 
-  regData = { avatar:'', email: '', password: '', fullname: '' };
+  userData = { image:'', email: '', password: '', fullname: '' };
+  user: User = new User('','','','','',null,null,'image.png');
+  card: Card;
   imgPreview = 'assets/avatar.png';
   constructor(public navCtrl: NavController,
     private imagePicker: ImagePicker,
     private base64: Base64,
-    private alertController: AlertController) {}
+    private alertController: AlertController,
+    private services: AuthService) {}
   getPhoto() {
     let options = {
         maximumImagesCount: 1
@@ -25,7 +31,8 @@ export class AuthPage implements OnInit {
         this.imgPreview = results[i];
         console.log(results[i]);
         this.base64.encodeFile(results[i]).then((base64File: string) => {
-        this.regData.avatar = base64File;
+        this.userData.image = base64File;
+        //this.user.image = base64File;
         }, (err) => {
           console.log(err);
           });
@@ -40,17 +47,17 @@ export class AuthPage implements OnInit {
       header: 'Enter you credit card details',
       inputs: [
         {
-          name: 'cardnumber',
+          name: 'card_number',
           placeholder: 'Card number',
           type: 'number'
         },
         {
-          name: 'expiration',
+          name: 'expiration_date',
           type: 'date'
         },
         {
-          name: 'ccv',
-          placeholder: 'CCV',
+          name: 'cvv',
+          placeholder: 'CVV',
           type: 'number'
         }
       ],
@@ -65,6 +72,8 @@ export class AuthPage implements OnInit {
         {
           text: 'Confirm',
           handler: data => {
+            this.card = new Card (card_type.credit_card.toString(), data.card_number, data.expiration_date, data.cvv, null);
+            console.log(this.card);
           }
         }
       ]
@@ -77,12 +86,12 @@ export class AuthPage implements OnInit {
     header: 'Enter you edinar details',
     inputs: [
       {
-        name: 'cardnumber',
+        name: 'card_number',
         placeholder: 'Edinar card number',
         type: 'number'
       },
       {
-        name: 'password',
+        name: 'password_edinar',
         placeholder: 'Password (8 digits)',
         type: 'password',
         label: 'ok'
@@ -99,6 +108,8 @@ export class AuthPage implements OnInit {
       {
         text: 'Confirm',
         handler: data => {
+          this.card = new Card (card_type.edinar.toString(), data.card_number,null,null, data.password_edinar);
+          console.log(this.card);
         }
       }
     ]
@@ -110,7 +121,19 @@ export class AuthPage implements OnInit {
     console.log("nothing to do here");
     
   }
-}      
+} 
+register(){
+  this.services.register(this.user, this.card).subscribe(
+    data => {
+      alert(data);
+    }
+  );
+  console.log(this.user);
+  console.log(this.card);
+}
+getToken(){
+  console.log(this.services.token);
+}
   ngOnInit() {
   }
 
