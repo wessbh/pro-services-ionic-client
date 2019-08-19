@@ -37,23 +37,6 @@ export class AuthService {
       }),
     );
   }
-
-  async getToken() {
-    return this.storage.getItem('token').then(
-      data => {
-        this.token = data;
-        if(this.token != null) {
-          this.isLoggedIn=true;
-        } else {
-          this.isLoggedIn=false;
-        }
-      },
-      error => {
-        this.token = null;
-        this.isLoggedIn=false;
-      }
-    );
-  }
   register(user: User, card: Card) {
     if(card.card_type == card_type.credit_card){
       return this.http.post(this.env.API_URL + 'users/signup_client',
@@ -71,5 +54,21 @@ export class AuthService {
         card_number: card.card_number, password_edinar: card.password_edinar}
       )
     }
+  }
+  async getToken() {
+    return this.storage.getItem('token').then(
+      data => {
+        this.token = data;
+        if(this.token != null) {
+          this.isLoggedIn=true;
+        } else {
+          this.isLoggedIn=false;
+        }
+      },
+      error => {
+        this.token = null;
+        this.isLoggedIn=false;
+      }
+    );
   }
 }

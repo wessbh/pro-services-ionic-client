@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Base64 } from '@ionic-native/base64/ngx';
-import { NavController, AlertController } from '@ionic/angular';
+import { NavController, AlertController, LoadingController } from '@ionic/angular';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { AuthService } from '../services/auth.service';
 import { Card, card_type } from './models/card';
 import { User } from './models/user';
+import { AlertService } from '../services/alert.service';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.page.html',
@@ -17,11 +18,22 @@ export class AuthPage implements OnInit {
   user: User = new User('','','','','',null,null,'image.png');
   card: Card;
   imgPreview = 'assets/avatar.png';
-  constructor(public navCtrl: NavController,
+  loadingElement: any;
+  constructor(public nav: NavController,
     private imagePicker: ImagePicker,
     private base64: Base64,
     private alertController: AlertController,
-    private services: AuthService) {}
+    private authServices: AuthService,
+    private loadingController: LoadingController,
+    private alertService: AlertService) {}
+
+    async  presentLoading() {
+      this.loadingElement = await this.loadingController.create({
+        message: 'Please wait...',
+        spinner: 'crescent'
+      });
+      return await this.loadingElement.present();
+    }
   getPhoto() {
     let options = {
         maximumImagesCount: 1
@@ -121,18 +133,28 @@ export class AuthPage implements OnInit {
     console.log("nothing to do here");
     
   }
-} 
-register(){
-  this.services.register(this.user, this.card).subscribe(
-    data => {
-      alert(data);
+}
+async register(){
+  this.presentLoading();
+  await this.authServices.register(this.user, this.card).subscribe(
+    data => {      
+      this.alertService.presentToast("Registered successfully !");
+      this.loadingElement.dismiss();
+    },
+    error => {
+      console.log(error);
+      this.loadingElement.dismiss();
+      this.alertService.presentToast("Something is wrong, check your information !");
+    },
+    () => {
+      this.nav.navigateRoot('/login');
     }
   );
   console.log(this.user);
   console.log(this.card);
 }
 getToken(){
-  console.log(this.services.token);
+  console.log(this.authServices.token);
 }
   ngOnInit() {
   }
