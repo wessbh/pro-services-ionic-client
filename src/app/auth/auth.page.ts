@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { NavController, AlertController, LoadingController } from '@ionic/angular';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/auth/auth.service';
 import { Card, card_type } from './models/card';
-import { User } from './models/user';
+import { User, User_type } from './models/user';
 import { AlertService } from '../services/alert.service';
 @Component({
   selector: 'app-auth',
@@ -15,8 +15,9 @@ import { AlertService } from '../services/alert.service';
 export class AuthPage implements OnInit {
 
   userData = { image:'', email: '', password: '', fullname: '' };
-  user: User = new User('','','','','',null,null,'image.png');
+  user: User = new User(User_type.client,'','','','',null,null,'image.png');
   card: Card;
+  isPro: boolean = false;
   imgPreview = 'assets/avatar.png';
   loadingElement: any;
   constructor(public nav: NavController,
@@ -35,11 +36,11 @@ export class AuthPage implements OnInit {
       return await this.loadingElement.present();
     }
   getPhoto() {
-    let options = {
+    const options = {
         maximumImagesCount: 1
     };
     this.imagePicker.getPictures(options).then((results) => {
-      for (var i = 0; i < results.length; i++) {
+      for (let i = 0; i < results.length; i++) {
         this.imgPreview = results[i];
         console.log(results[i]);
         this.base64.encodeFile(results[i]).then((base64File: string) => {
@@ -50,8 +51,20 @@ export class AuthPage implements OnInit {
           });
         }        
       }, (err) => { });
-  } 
-  async onSelectChange($event){
+  }
+   onSelectChange($event){
+    if($event.target.value == "client"){
+      this.isPro = false;
+      this.user.user_type = User_type.client;
+      console.log('this is a client');
+    }
+    if($event.target.value == "pro"){
+      this.isPro = true;
+      this.user.user_type = User_type.pro;
+      console.log('this is a pro');
+    }
+  }
+  /*async onSelectChange($event){
     console.log("done");
     var alert: any;
     if($event.target.value == "credit"){
@@ -126,36 +139,36 @@ export class AuthPage implements OnInit {
       }
     ]
   });
-  
+
   await alert.present();
   }
   if($event.target.value == "payment_method"){
     console.log("nothing to do here");
-    
+
   }
-}
-async register(){
-  this.presentLoading();
-  await this.authServices.register(this.user, this.card).subscribe(
-    data => {      
-      this.alertService.presentToast("Registered successfully !");
-      this.loadingElement.dismiss();
-    },
-    error => {
-      console.log(error);
-      this.loadingElement.dismiss();
-      this.alertService.presentToast("Something is wrong, check your information !");
-    },
-    () => {
-      this.nav.navigateRoot('/login');
-    }
-  );
-  console.log(this.user);
-  console.log(this.card);
-}
-getToken(){
-  console.log(this.authServices.token);
-}
+  }*/
+  async register() {
+    this.presentLoading();
+    await this.authServices.register(this.user).subscribe(
+      data => {
+        this.alertService.presentToast('Registered successfully !');
+        this.loadingElement.dismiss();
+      },
+      error => {
+        console.log(error);
+        this.loadingElement.dismiss();
+        this.alertService.presentToast('Something is wrong, check your information !');
+      },
+      () => {
+        this.nav.navigateRoot('/login');
+      }
+    );
+    console.log(this.user);
+    console.log(this.card);
+  }
+  getToken() {
+    console.log(this.authServices.token);
+  }
   ngOnInit() {
   }
 

@@ -44,13 +44,23 @@
                       </ion-avatar>
                   </ion-item>
                   <ion-item>
-                      <!--<ion-label>Choose your payment method</ion-label>-->
+                      <ion-label>User type</ion-label>
+                      <ion-select (ionChange)="onSelectChange($event)"  class="fullWidth"  value="client_type" okText="Confirm" cancelText="Cancel" >
+                          <ion-select-option value="client">Client</ion-select-option>
+                          <ion-select-option value="pro">Professional</ion-select-option>
+                      </ion-select>
+                  </ion-item>
+                    <ion-item *ngIf="isPro">
+                        <ion-input [(ngModel)] = "user.matricule_fiscale"  name="id_fiscale" type="text" placeholder="Your tax registration number" ngModel required></ion-input>
+                    </ion-item>
+                  <!--<ion-item>
+                      
                       <ion-label>Payment method</ion-label>
                       <ion-select class="fullWidth" (ionChange)="onSelectChange($event)" value="payment_method" okText="Okay" cancelText="Dismiss" >
                         <ion-select-option value="credit">Credit card</ion-select-option>
                         <ion-select-option value="edinar">e-dinar</ion-select-option>
                       </ion-select>
-                    </ion-item>
+                    </ion-item>-->
                 </div>
                 <div padding>
                   <ion-button (click)="register()" size="large" type="submit" [disabled]="form.invalid" expand="block">Register</ion-button>

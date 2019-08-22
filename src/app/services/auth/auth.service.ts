@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage/ngx';
-import { EnvService } from './env.service';
+import { EnvService } from '../env.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
-import { User } from '../auth/models/user';
-import { Card, card_type } from '../auth/models/card';
+import { User, User_type } from '../../auth/models/user';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +11,7 @@ export class AuthService {
 
   isLoggedIn = false;
   token:any;
-
+  route: string;
   constructor(
     private http: HttpClient,
     private storage: NativeStorage,
@@ -37,23 +36,21 @@ export class AuthService {
       }),
     );
   }
-  register(user: User, card: Card) {
-    if(card.card_type == card_type.credit_card){
-      return this.http.post(this.env.API_URL + 'users/signup_client',
-        {user_type: 'client', email: user.email, password: user.password,
-        nom: user.nom, prenom: user.prenom, num_portable: user.num_portable,
-        num_fixe: user.num_fixe, image: user.image, card_type: card.card_type,
-        card_number: card.card_number, expiration_date: card.expiration_date, cvv: card.cvv}
-      )
-    }
-    if(card.card_type == card_type.edinar){
-      return this.http.post(this.env.API_URL + 'users/signup_client',
-        {user_type: 'client', email: user.email, password: user.password,
-        nom: user.nom, prenom: user.prenom, num_portable: user.num_portable,
-        num_fixe: user.num_fixe, image: user.image, card_type: card.card_type,
-        card_number: card.card_number, password_edinar: card.password_edinar}
-      )
-    }
+  register(user: User) {
+      if(user.user_type == 'client'){
+          return this.http.post(this.env.API_URL + 'users/signup_client',
+              {user_type: User_type.client, email: user.email, password: user.password,
+                  nom: user.nom, prenom: user.prenom, num_portable: user.num_portable,
+                  num_fixe: user.num_fixe, image: user.image}
+          )
+      }
+      if(user.user_type == 'pro'){
+          return this.http.post(this.env.API_URL + 'users/signup_pro',
+              {user_type: User_type.pro, email: user.email, password: user.password,
+                  nom: user.nom, prenom: user.prenom, num_portable: user.num_portable,
+                  num_fixe: user.num_fixe, image: user.image, matricule_fiscale: user.matricule_fiscale}
+          )
+      }
   }
   async getToken() {
     return this.storage.getItem('token').then(
@@ -70,5 +67,19 @@ export class AuthService {
         this.isLoggedIn=false;
       }
     );
+  }
+  logout() {
+    const headers = new HttpHeaders({
+      'Authorization': this.token
+    });
+    return this.http.get(this.env.API_URL + 'users/logout', { headers: headers })
+    .pipe(
+      tap(data => {
+        this.storage.remove("token");
+        this.isLoggedIn = false;
+        delete this.token;
+        return data;
+      })
+    )
   }
 }
