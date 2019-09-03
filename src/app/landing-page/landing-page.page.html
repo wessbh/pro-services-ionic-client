@@ -1,9 +1,47 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>landing_page</ion-title>
+    <ion-title>landing-page</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <div *ngFor="let domaine of domaines_array" color="light">
+          <ion-item-divider>{{domaine.libelle}}</ion-item-divider>
+          <ion-segment scrollable class="fixed">
+            <ion-segment-button *ngFor="let cat of domaine.categories" value="{{cat.libelle}}">
+                <ion-avatar>
+                  <img src="assets/avatar.png">
+                </ion-avatar>
+              <ion-label> {{cat.libelle}} </ion-label>
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+<!--
+  </ion-list> <ion-button (click)="getCategories('Plomberie')">Click Me!</ion-button>
+  <ion-grid>
+    <ion-list>
+      <ion-item *ngFor="let domaine of domaines_array">
+        <ion-item>
+          <ion-row>
+            <ion-item-divider color="light">{{domaine.libelle}}</ion-item-divider>
+          </ion-row>
+        </ion-item>
+        <ion-item>
+          <ion-row>
+            <ion-col>
+              <ion-item *ngFor="let cat of domaine.categories">
+                <ion-label> {{cat.libelle}} </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-item>
+  </ion-grid> 
+-->
