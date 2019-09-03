@@ -4,8 +4,8 @@ import { Base64 } from '@ionic-native/base64/ngx';
 import { NavController, AlertController, LoadingController } from '@ionic/angular';
 import { ImagePicker } from '@ionic-native/image-picker/ngx';
 import { AuthService } from '../services/auth/auth.service';
-import { Card, card_type } from './models/card';
-import { User, User_type } from './models/user';
+import { Card, card_type } from '../models/card';
+import { User, User_type } from '../models/user';
 import { AlertService } from '../services/alert.service';
 @Component({
   selector: 'app-auth',

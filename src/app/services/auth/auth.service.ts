@@ -3,7 +3,7 @@ import { NativeStorage } from '@ionic-native/native-storage/ngx';
 import { EnvService } from '../env.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
-import { User, User_type } from '../../auth/models/user';
+import { User, User_type } from '../../models/user';
 @Injectable({
   providedIn: 'root'
 })

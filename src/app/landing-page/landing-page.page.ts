@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DomaineService } from "../services/domaine.service";
+
 import { HttpClient } from "@angular/common/http";
 import { Domaine } from '../models/domaine';
 import { Category } from '../models/category';
+import { DomainesService } from '../services/domaines.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -15,7 +16,7 @@ export class LandingPagePage implements OnInit {
   categories_array: any;
   imgPreview = 'assets/avatar.png';
   constructor(
-    private domaineServices: DomaineService,
+    private domaineServices: DomainesService,
     private http: HttpClient
   ) { }
 
